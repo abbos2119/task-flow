@@ -14,7 +14,7 @@ inside php container ,run composer install and php artisan db:seed
 
 ### Task
 
-Task — workflow subject. Har bir task o'zining `task_type` va `present_state` field'lariga ega. `task_type` qaysi workflow config ishlatilishini belgilaydi, `present_state` esa task hozir pipeline'ning qaysi state'ida turganini saqlaydi (masalan `development`, `testing`, `review`). Task o'zi hech qanday ish bajarmaydi — u faqat "nima" va "qayerda" degan context beradi. Barcha amaliy ish checkpoint orqali boshqariladi.
+Task — workflow subject. Har bir task o'zining `task_type` va `present_state` field'lariga ega, present_state bu workflowdagi joriy state task uchun , va u workflow tomonidan defitionga ko'ra set qilinadi, bu workflow set upda MethodMarkingStore yordamida belgilab qo'yilgan. `task_type` qaysi workflow config ishlatilishini belgilaydi, `present_state` esa task hozir pipeline'ning qaysi state'ida turganini saqlaydi (masalan `development`, `testing`, `review`). Task o'zi hech qanday ish bajarmaydi — u faqat "nima" va "qayerda" degan context beradi. Barcha amaliy ish checkpoint orqali boshqariladi.
 
 ### Checkpoint
 
