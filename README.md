@@ -2,10 +2,10 @@
 
 ```bash
 git clone <repo-url>
+cp .env.example .env
 cp application/.env.example application/.env
 docker compose up -d
-docker exec task-tracker-php composer install -d /var/www/application
-docker exec task-tracker-php php /var/www/application/artisan migrate --seed
+inside php container ,run composer install and php artisan db:seed
 ```
 
 ---
@@ -31,8 +31,6 @@ pending → claimed → in_progress → done
 
 ### Symfony Workflow
 
-Har bir `task_type` uchun config'da alohida state machine — state'lar va transition'lar.
-
 Quyida example workflow:
 
 ![Workflow Diagram](application/resources/workflow-diagram.png)
@@ -53,4 +51,4 @@ Workflow nima beradi:
 - **Permission-based transitions** — har bir transition'ga permission biriktirilishi mumkin. `my_enabled_transitions` faqat joriy user bajara oladigan transition'larni qaytaradi
 - **Event system** — har bir transition oldidan va keyin event'lar fire bo'ladi. Checkpoint yaratish, notification yuborish kabi logic'lar shu orqali ulanadi
 
-Checkpoint `in_progress` ga o'tganda, mumkin bo'lgan transition nomlari `transition_names` da saqlanadi. User ish tugagach transition'ni tanlab task'ni keyingi state'ga o'tkazadi.
+Responsible myEnabledTransitions orqali u uchun enable bo'lgan transitionlarni ololadi va ish tugagach transition'ni tanlab task'ni keyingi state'ga o'tkaza oladi.
