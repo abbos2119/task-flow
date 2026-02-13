@@ -7,8 +7,8 @@ namespace App\Services;
 use App\Constants\RoleNames;
 use App\Data\Auth\AuthTokenData;
 use App\Models\User;
+use App\Exceptions\InvalidCredentialsException;
 use App\Repositories\UserRepository;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use InvalidArgumentException;
@@ -24,12 +24,12 @@ final readonly class AuthService
         private UserRepository $userRepo,
     ) {}
 
-    /** @throws AuthenticationException|Throwable */
-    public function loginWithPasswordAndCreateToken(string $loginOrEmail, string $password, string $deviceName = self::DEFAULT_DEVICE): AuthTokenData
+    /** @throws InvalidCredentialsException|Throwable */
+    public function loginWithPassword(string $loginOrEmail, string $password, string $deviceName = self::DEFAULT_DEVICE): AuthTokenData
     {
         $user = $this->userRepo->findByLoginOrEmail($loginOrEmail);
         if (!$user?->password || !Hash::check($password, $user->password)) {
-            throw new AuthenticationException('Invalid login or password.');
+            throw new InvalidCredentialsException();
         }
         $token = $this->createToken($user, $deviceName);
         return AuthTokenData::fromUserAndToken($user, $token->plainTextToken);

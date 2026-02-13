@@ -15,9 +15,9 @@ use App\Http\Requests\Auth\LoginOtpRequest;
 use App\Http\Requests\Auth\LoginPasswordRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\SendOtpRequest;
+use App\Exceptions\InvalidCredentialsException;
 use App\Services\AuthService;
 use App\Services\OtpService;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
@@ -82,7 +82,7 @@ final readonly class AuthController extends Controller
         return $this->authService->loginWithOtpAndCreateToken($data->identifier, $data->code);
     }
 
-    /** @throws AuthenticationException|Throwable */
+    /** @throws InvalidCredentialsException|Throwable */
     #[OA\Post(
         path: '/api/auth/login-password',
         summary: 'Login via login and password',
@@ -105,7 +105,7 @@ final readonly class AuthController extends Controller
     public function loginPassword(LoginPasswordRequest $request): AuthTokenData
     {
         $data = LoginPasswordData::from($request->validated());
-        return $this->authService->loginWithPasswordAndCreateToken($data->loginOrEmail, $data->password);
+        return $this->authService->loginWithPassword($data->loginOrEmail, $data->password);
     }
 
     /** @throws Throwable */
@@ -149,9 +149,7 @@ final readonly class AuthController extends Controller
     public function checkLogin(Request $request): JsonResponse
     {
         $login = $request->query('login', '');
-        $available = is_string($login) && $login !== ''
-            ? $this->authService->isLoginAvailable($login)
-            : false;
+        $available = is_string($login) && $login !== '' && $this->authService->isLoginAvailable($login);
         return response()->json(['available' => $available]);
     }
 

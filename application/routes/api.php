@@ -23,20 +23,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
     });
 
-    Route::prefix('v1/task-management')->group(function () {
-        Route::post('tasks/open', [TaskController::class, 'open']);
-        Route::get('tasks/{id}', [TaskController::class, 'show']);
-        Route::get('tasks/{id}/history', [TaskController::class, 'history']);
-        Route::get('checkpoints/{id}', [CheckpointController::class, 'show']);
-        Route::post('checkpoints/{id}/apply', [CheckpointController::class, 'apply']);
-        Route::post('checkpoints/{id}/assign', [CheckpointController::class, 'assign']);
-        Route::post('checkpoints/{id}/claim', [CheckpointController::class, 'claim']);
-        Route::post('checkpoints/{id}/start', [CheckpointController::class, 'start']);
-    });
+    Route::post('tasks/open', [TaskController::class, 'open']);
+    Route::get('tasks/{id}', [TaskController::class, 'show']);
+    Route::get('tasks/{id}/history', [TaskController::class, 'history']);
+    Route::get('checkpoints/{id}', [CheckpointController::class, 'show']);
+    Route::post('checkpoints/{id}/apply', [CheckpointController::class, 'apply']);
+    Route::post('checkpoints/{id}/assign', [CheckpointController::class, 'assign']);
+    Route::post('checkpoints/{id}/claim', [CheckpointController::class, 'claim']);
+    Route::post('checkpoints/{id}/start', [CheckpointController::class, 'start']);
 
-    Route::prefix('v1/task-flow')->group(function () {
-        Route::get('stages-stats', [TaskFlowController::class, 'getStagesStats']);
-        Route::get('sub-stats', [TaskFlowController::class, 'getSubStats']);
-        Route::get('collection', [TaskFlowController::class, 'getTaskCollection']);
-    });
+
+
+    Route::get('task-flow/stages-stats', [TaskFlowController::class, 'getStagesStats']);
+    Route::get('task-flow/sub-stats', [TaskFlowController::class, 'getSubStats']);
+    Route::get('task-flow/collection', [TaskFlowController::class, 'getTaskCollection']);
+
 });

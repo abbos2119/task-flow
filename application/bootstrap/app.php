@@ -1,6 +1,7 @@
 <?php
 
 use App\Contracts\OtpSenderInterface;
+use App\Exceptions\InvalidCredentialsException;
 use App\Providers\AppServiceProvider;
 use App\Services\Otp\EmailOtpSender;
 use Illuminate\Auth\AuthenticationException;
@@ -63,6 +64,12 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'message' => $e->getMessage() ?: 'Too many requests.',
             ], Response::HTTP_TOO_MANY_REQUESTS);
+        });
+
+        $exceptions->render(function (InvalidCredentialsException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNAUTHORIZED);
         });
 
         $exceptions->render(function (InvalidArgumentException $e) {

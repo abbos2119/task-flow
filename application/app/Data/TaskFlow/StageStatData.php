@@ -11,7 +11,6 @@ class StageStatData extends Data
     public function __construct(
         public string $id,
         public string $label,
-        public string $color,
         public int $totalTasks,
     ) {}
 }

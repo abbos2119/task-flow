@@ -22,7 +22,7 @@ readonly class TaskController extends Controller
 
     /** @throws Throwable */
     #[OA\Post(
-        path: '/api/v1/task-management/tasks/open',
+        path: '/api/tasks/open',
         summary: 'Create a new task',
         security: [['sanctum' => []]],
         requestBody: new OA\RequestBody(
@@ -51,13 +51,13 @@ readonly class TaskController extends Controller
     }
 
     #[OA\Get(
-        path: '/api/v1/task-management/tasks/{id}',
+        path: '/api/tasks/{id}',
         summary: 'Single task by ID',
         security: [['sanctum' => []]],
         tags: ['Tasks'],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, description: 'Task ID', schema: new OA\Schema(type: 'string')),
-            new OA\Parameter(name: 'include', in: 'query', required: false, description: 'Relations: checkpoints, firstCheckpoint, lastCheckpoint, responsible', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'id', description: 'Task ID', in: 'path', required: true, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'include', description: 'Relations: checkpoints, firstCheckpoint, lastCheckpoint, responsible', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'OK'),
@@ -72,15 +72,15 @@ readonly class TaskController extends Controller
     }
 
     #[OA\Get(
-        path: '/api/v1/task-management/tasks/{id}/history',
+        path: '/api/tasks/{id}/history',
         summary: 'Task checkpoint history (paginated)',
         security: [['sanctum' => []]],
         tags: ['Tasks'],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, description: 'Task ID', schema: new OA\Schema(type: 'string')),
-            new OA\Parameter(name: 'include', in: 'query', required: false, description: 'Relations per checkpoint: task, responsible', schema: new OA\Schema(type: 'string')),
-            new OA\Parameter(name: 'per_page', in: 'query', required: false, description: 'Items per page', schema: new OA\Schema(type: 'integer', default: 15)),
-            new OA\Parameter(name: 'page', in: 'query', required: false, description: 'Page number', schema: new OA\Schema(type: 'integer', default: 1)),
+            new OA\Parameter(name: 'id', description: 'Task ID', in: 'path', required: true, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'include', description: 'Relations per checkpoint: task, responsible', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'per_page', description: 'Items per page', in: 'query', required: false, schema: new OA\Schema(type: 'integer', default: 15)),
+            new OA\Parameter(name: 'page', description: 'Page number', in: 'query', required: false, schema: new OA\Schema(type: 'integer', default: 1)),
         ],
         responses: [
             new OA\Response(response: 200, description: 'OK'),

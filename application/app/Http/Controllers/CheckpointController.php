@@ -20,7 +20,7 @@ readonly class CheckpointController extends Controller
     ) {}
 
     #[OA\Get(
-        path: '/api/v1/task-management/checkpoints/{id}',
+        path: '/api/checkpoints/{id}',
         summary: 'Single checkpoint by ID',
         security: [['sanctum' => []]],
         tags: ['Checkpoints'],
@@ -42,7 +42,7 @@ readonly class CheckpointController extends Controller
 
     /** @throws Throwable */
     #[OA\Post(
-        path: '/api/v1/task-management/checkpoints/{id}/apply',
+        path: '/api/checkpoints/{id}/apply',
         summary: 'Apply workflow transition to checkpoint',
         security: [['sanctum' => []]],
         requestBody: new OA\RequestBody(
@@ -71,7 +71,7 @@ readonly class CheckpointController extends Controller
 
     /** @throws Throwable */
     #[OA\Post(
-        path: '/api/v1/task-management/checkpoints/{id}/assign',
+        path: '/api/checkpoints/{id}/assign',
         summary: 'Assign responsible user to checkpoint',
         security: [['sanctum' => []]],
         requestBody: new OA\RequestBody(
@@ -99,7 +99,7 @@ readonly class CheckpointController extends Controller
 
     /** @throws Throwable */
     #[OA\Post(
-        path: '/api/v1/task-management/checkpoints/{id}/claim',
+        path: '/api/checkpoints/{id}/claim',
         summary: 'Claim checkpoint (assign to current user)',
         security: [['sanctum' => []]],
         requestBody: new OA\RequestBody(
@@ -123,7 +123,7 @@ readonly class CheckpointController extends Controller
 
     /** @throws Throwable */
     #[OA\Post(
-        path: '/api/v1/task-management/checkpoints/{id}/start',
+        path: '/api/checkpoints/{id}/start',
         summary: 'Start checkpoint',
         security: [['sanctum' => []]],
         tags: ['Checkpoints'],

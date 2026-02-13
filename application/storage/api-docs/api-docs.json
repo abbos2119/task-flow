@@ -246,13 +246,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/checkpoints/{id}": {
+        "/api/checkpoints/{id}": {
             "get": {
                 "tags": [
                     "Checkpoints"
                 ],
                 "summary": "Single checkpoint by ID",
-                "operationId": "0b99b38037decca53a563feccc016233",
+                "operationId": "270b15a523da68d6b0b5aaae7e3e54dc",
                 "parameters": [
                     {
                         "name": "id",
@@ -287,13 +287,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/checkpoints/{id}/apply": {
+        "/api/checkpoints/{id}/apply": {
             "post": {
                 "tags": [
                     "Checkpoints"
                 ],
                 "summary": "Apply workflow transition to checkpoint",
-                "operationId": "9321d6dda6601436679d869bf6be3159",
+                "operationId": "c53536df1be05141f83ea95628f75699",
                 "parameters": [
                     {
                         "name": "id",
@@ -346,13 +346,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/checkpoints/{id}/assign": {
+        "/api/checkpoints/{id}/assign": {
             "post": {
                 "tags": [
                     "Checkpoints"
                 ],
                 "summary": "Assign responsible user to checkpoint",
-                "operationId": "ac549826dca61c43b7b15c09df0402e3",
+                "operationId": "fd5e9cfefd150036d62da0e6c7e0327c",
                 "parameters": [
                     {
                         "name": "id",
@@ -402,13 +402,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/checkpoints/{id}/claim": {
+        "/api/checkpoints/{id}/claim": {
             "post": {
                 "tags": [
                     "Checkpoints"
                 ],
                 "summary": "Claim checkpoint (assign to current user)",
-                "operationId": "9a2587eb8788dd764212a5a56c9432a2",
+                "operationId": "a257634c51ae820c7423b4534d823c7c",
                 "parameters": [
                     {
                         "name": "id",
@@ -450,13 +450,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/checkpoints/{id}/start": {
+        "/api/checkpoints/{id}/start": {
             "post": {
                 "tags": [
                     "Checkpoints"
                 ],
                 "summary": "Start checkpoint",
-                "operationId": "7290bf54651394fe0444f7e0dd366fa1",
+                "operationId": "21c42d338d26bfa68637a189aa222326",
                 "parameters": [
                     {
                         "name": "id",
@@ -482,13 +482,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/tasks/open": {
+        "/api/tasks/open": {
             "post": {
                 "tags": [
                     "Tasks"
                 ],
                 "summary": "Create a new task",
-                "operationId": "e7290b51b98c461d086f6da75c58df89",
+                "operationId": "edaf42947e0ef8b06f649e42ff664fe3",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -539,13 +539,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/tasks/{id}": {
+        "/api/tasks/{id}": {
             "get": {
                 "tags": [
                     "Tasks"
                 ],
                 "summary": "Single task by ID",
-                "operationId": "72956a03237ba8797e23e3c7f1bcc9ce",
+                "operationId": "90b3cd4d2d4b416dc989d2055dbed06c",
                 "parameters": [
                     {
                         "name": "id",
@@ -581,13 +581,13 @@
                 ]
             }
         },
-        "/api/v1/task-management/tasks/{id}/history": {
+        "/api/tasks/{id}/history": {
             "get": {
                 "tags": [
                     "Tasks"
                 ],
                 "summary": "Task checkpoint history (paginated)",
-                "operationId": "846ef938bd69684c99d31dd116283970",
+                "operationId": "2c0ab3a3ce7214a441c64649e56b4728",
                 "parameters": [
                     {
                         "name": "id",
@@ -643,13 +643,13 @@
                 ]
             }
         },
-        "/api/v1/task-flow/stages-stats": {
+        "/api/task-flow/stages-stats": {
             "get": {
                 "tags": [
                     "Task Flow"
                 ],
                 "summary": "Stage statistics (counts per pipeline stage)",
-                "operationId": "682c7f77e4334f1c229c085ed0fc5f8c",
+                "operationId": "f606d06902ed6868f25a47f07505cbe0",
                 "parameters": [
                     {
                         "name": "mine",
@@ -676,13 +676,13 @@
                 ]
             }
         },
-        "/api/v1/task-flow/sub-stats": {
+        "/api/task-flow/sub-stats": {
             "get": {
                 "tags": [
                     "Task Flow"
                 ],
                 "summary": "Checkpoint status counts for a stage",
-                "operationId": "d8212f59d4bf9965da56d6eed6b6b595",
+                "operationId": "532993f18c2598e39ca081128889b21e",
                 "parameters": [
                     {
                         "name": "stage_id",
@@ -721,13 +721,13 @@
                 ]
             }
         },
-        "/api/v1/task-flow/collection": {
+        "/api/task-flow/collection": {
             "get": {
                 "tags": [
                     "Task Flow"
                 ],
                 "summary": "Filtered task list (paginated)",
-                "operationId": "d16aa45fd87f93d2a890daf9e8e1ac76",
+                "operationId": "1471b84533c37bb083176acd0ed31b71",
                 "parameters": [
                     {
                         "name": "stage_id",

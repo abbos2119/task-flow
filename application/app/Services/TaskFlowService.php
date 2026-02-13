@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Data\TaskFlow\{StageStatData, SubStatsData, TaskFlowFilterData, TaskFlowScope};
+use App\Data\TaskFlow\{StageStatData, TaskFlowFilterData, TaskFlowScope};
 use App\Data\Task\TaskData;
 use App\Models\{Checkpoint, User};
 use App\Repositories\TaskFlowRepository;
@@ -21,29 +21,48 @@ final readonly class TaskFlowService
     {
         $scope = TaskFlowScope::fromUser($user, $mine);
         $counts = $this->repository->getStateCounts($scope);
-        return array_map(function (array $config) use ($counts) {
-            $states = $config['task_states'] ?? [];
-            return new StageStatData(
-                id:    $config['identifier'],
-                label: $config['display_name'],
-                color: $config['theme_color'],
-                totalTasks: (int) array_sum(array_intersect_key($counts, array_flip($states)))
+
+        $result = [];
+        foreach (config('task_flow.pipeline.stages', []) as $config) {
+            $total = 0;
+            foreach ($config['task_states'] ?? [] as $state) {
+                $total += $counts[$state] ?? 0;
+            }
+            $result[] = new StageStatData(
+                id:         $config['identifier'],
+                label:      $config['display_name'],
+                totalTasks: $total,
             );
-        }, config('task_flow.pipeline.stages', []));
+        }
+
+        return $result;
     }
 
 
-    public function getSubStats(User $user, string $stageId, bool $mine): ?SubStatsData
+    public function getSubStats(User $user, string $stageId, bool $mine): ?array
     {
         $states = $this->getStatesByStageId($stageId);
         if (empty($states)) return null;
+
         $counts = $this->repository->getSubStatusCounts(TaskFlowScope::fromUser($user, $mine), $states);
-        return new SubStatsData(
-            pending:    $counts[Checkpoint::STATUS_PENDING] ?? 0,
-            claimed:    $counts[Checkpoint::STATUS_CLAIMED] ?? 0,
-            inProgress: $counts[Checkpoint::STATUS_IN_PROGRESS] ?? 0,
-            done:       $counts[Checkpoint::STATUS_DONE] ?? 0,
-        );
+
+        $subStatuses = [
+            Checkpoint::STATUS_PENDING     => 'Pending',
+            Checkpoint::STATUS_CLAIMED     => 'Claimed',
+            Checkpoint::STATUS_IN_PROGRESS => 'In Progress',
+            Checkpoint::STATUS_DONE        => 'Done',
+        ];
+
+        $result = [];
+        foreach ($subStatuses as $id => $label) {
+            $result[] = new StageStatData(
+                id:         $id,
+                label:      $label,
+                totalTasks: $counts[$id] ?? 0,
+            );
+        }
+
+        return $result;
     }
 
 

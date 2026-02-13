@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Data\TaskFlow\StageStatData;
-use App\Data\TaskFlow\SubStatsData;
 use App\Data\TaskFlow\TaskFlowFilterData;
 use App\Models\User;
 use App\Services\TaskFlowService;
@@ -21,7 +20,7 @@ readonly class TaskFlowController extends Controller
     ) {}
 
     #[OA\Get(
-        path: '/api/v1/task-flow/stages-stats',
+        path: '/api/task-flow/stages-stats',
         summary: 'Stage statistics (counts per pipeline stage)',
         security: [['sanctum' => []]],
         tags: ['Task Flow'],
@@ -42,7 +41,7 @@ readonly class TaskFlowController extends Controller
     }
 
     #[OA\Get(
-        path: '/api/v1/task-flow/sub-stats',
+        path: '/api/task-flow/sub-stats',
         summary: 'Checkpoint status counts for a stage',
         security: [['sanctum' => []]],
         tags: ['Task Flow'],
@@ -56,16 +55,18 @@ readonly class TaskFlowController extends Controller
             new OA\Response(response: 404, description: 'Stage not found'),
         ]
     )]
-    public function getSubStats(Request $request): SubStatsData|JsonResponse
+    public function getSubStats(Request $request): DataCollection|JsonResponse
     {
         /** @var User $user */
         $user = $request->user();
         $data = $this->service->getSubStats($user, (string) $request->query('stage_id'), filter_var($request->query('mine'), FILTER_VALIDATE_BOOLEAN));
-        return $data ?? response()->json(['error' => 'Stage not found'], 404);
+        return $data !== null
+            ? StageStatData::collect($data, DataCollection::class)
+            : response()->json(['error' => 'Stage not found'], 404);
     }
 
     #[OA\Get(
-        path: '/api/v1/task-flow/collection',
+        path: '/api/task-flow/collection',
         summary: 'Filtered task list (paginated)',
         security: [['sanctum' => []]],
         tags: ['Task Flow'],
