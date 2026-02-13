@@ -1,8 +1,6 @@
-# Vendor (Composer dependencies — qayta o‘rnatish: composer install)
 /vendor/
 /application/vendor/
 
-# IDE va redaktorlar
 .idea/
 .vscode/
 *.swp
@@ -16,7 +14,9 @@ phpunit.xml
 coverage/
 *.php~
 
-# Laravel storage (loglar va cache)
+/application/.env
+.env
+
 /application/storage/logs/*.log
 /application/storage/framework/cache/data/*
 /application/storage/framework/sessions/*
@@ -27,14 +27,11 @@ coverage/
 /application/bootstrap/cache/*
 !/application/bootstrap/cache/.gitignore
 
-# Node (agar kelajakda frontend qo‘shilsa)
 node_modules/
 npm-debug.log
 yarn-error.log
 
-# OS
 .DS_Store
 Thumbs.db
 
-# Docker (ixtiyoriy — local volume ma’lumotlari)
-# *.log
+
